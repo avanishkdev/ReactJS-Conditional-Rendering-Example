@@ -7,29 +7,23 @@ import Char from "./Char.component";
 
  constructor() {
    super();
-   this.state = {
-     length: 0,
-     chars: [],
+   this.state = {        
      text: ""
    };
  }
 
  handleInputChange = (event) => {
-   this.setState({   
-     chars:[...event.target.value],
+   this.setState({     
      text: event.target.value
    });
  }
 
 handleClick = (index) => {
-console.log(`index is ${index}`)
-
-  let chars =  [...this.state.chars];
+  let chars =  [...this.state.text];
   chars.splice(index,1);
 
   this.setState({
-    text: chars.join(""),
-    chars: chars    
+    text: chars.join("")    
   });
 }
 
@@ -37,9 +31,9 @@ console.log(`index is ${index}`)
   return (
     <div className="App">
         <input type="text" onChange={this.handleInputChange} value={this.state.text} />
-        <p>Length of text is {this.state.chars.length}</p>
-        <Validation length={this.state.chars.length} />
-        {this.state.chars.map((t,index)=> <Char key={index} letter={t} id= {index} click={this.handleClick} />)}
+        <p>Length of text is {this.state.text.length}</p>
+        <Validation length={this.state.text.length} />
+        {[...this.state.text].map((t,index)=> <Char key={index} letter={t} id= {index} click={this.handleClick} />)}
     </div>
   );
  }
