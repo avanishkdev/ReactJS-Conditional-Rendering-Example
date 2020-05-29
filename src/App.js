@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Validation from "./Validation.component";
+import Char from "./Char.component";
 
-function App() {
+ class App extends Component {
+
+ constructor() {
+   super();
+   this.state = {
+     length: 0,
+     chars: [],
+     text: ""
+   };
+ }
+
+ handleInputChange = (event) => {
+   this.setState({   
+     chars:[...event.target.value],
+     text: event.target.value
+   });
+ }
+
+handleClick = (index) => {
+console.log(`index is ${index}`)
+
+  let chars =  [...this.state.chars];
+  chars.splice(index,1);
+
+  this.setState({
+    text: chars.join(""),
+    chars: chars    
+  });
+}
+
+ render() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <input type="text" onChange={this.handleInputChange} value={this.state.text} />
+        <p>Length of text is {this.state.chars.length}</p>
+        <Validation length={this.state.chars.length} />
+        {this.state.chars.map((t,index)=> <Char key={index} letter={t} id= {index} click={this.handleClick} />)}
     </div>
   );
+ }
 }
 
 export default App;
